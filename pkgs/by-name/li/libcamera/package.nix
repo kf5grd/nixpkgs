@@ -112,6 +112,11 @@ stdenv.mkDerivation rec {
   # Silence fontconfig warnings about missing config
   FONTCONFIG_FILE = makeFontsConf { fontDirectories = [ ]; };
 
+  # Re-generate signatures for IPA module libraries
+  postFixup = ''
+    ../src/ipa/ipa-sign-install.sh src/ipa-priv-key.pem $out/lib/libcamera/ipa_*.so
+  '';
+
   meta = with lib; {
     description = "Open source camera stack and framework for Linux, Android, and ChromeOS";
     homepage = "https://libcamera.org";
